@@ -36,7 +36,17 @@ def main():
 				#Verify each magic bytes
 				f.seek(-1,1)  #Include cur_byte
 				if mb.verify(f) and mb.filetype not in PARSER["exclude"]:  #Print data
-					print(f"  [{hex(f.tell()-len(mb.magic))}] \033[92m{mb}\033[0m")
+					length=len(mb.magic)
+					print(f"  [{hex(f.tell()-length)}] \033[92m{mb}\033[0m")
+					#Try to parse, if one exists
+					if mb.parser!=None:
+						#Seek back by length of magic bytes
+						f.seek(-length,1)
+						parse_return=mb.parser(f)
+						if parse_return!=None:
+							print(parse_return)
+						#Seek one as if moving past the initally read byte
+						f.seek(1,1)
 					break
 		except KeyError:  #Byte isn't in table
 			continue
