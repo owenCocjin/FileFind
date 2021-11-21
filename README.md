@@ -6,6 +6,7 @@ This script was conceived during a CTF, where the solution is found by "unzippin
 ---
 
 ## Usage:
+>You can test the tool on the provided example jpg file `latte_art.jpg`
 
 Generic usage is simply passing a file using -f:
 ```
