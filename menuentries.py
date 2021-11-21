@@ -1,8 +1,16 @@
+## Author:  Owen Cocjin
+## Version: 0.1
+## Date: 2020.11.21
+## Description:    Menu entries for FileFind
+## Notes:
+## Updates:
+##  - Made exclude flag args case-insensitive
+
 from ProgMenu.progmenu import EntryArg,EntryFlag
 
 def excludeFunc(e):
 	'''Returns a list of filetypes to ignore'''
-	return e.split(',')
+	return [i.upper() for i in e.split(',')]
 def helpFunc():
 	print('''filefind.py [-efh]
   Find magic bytes in a file.

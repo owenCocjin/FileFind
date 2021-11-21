@@ -2,7 +2,7 @@
 ## Author:  Owen Cocjin
 ## Version: 0.1
 ## Date: 2020.11.20
-## Description:    Find any magic bytes in
+## Description:    Find any magic bytes in a given file
 import magicdata
 
 from ProgMenu.progmenu import MENU
