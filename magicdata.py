@@ -1,10 +1,12 @@
 ## Author:  Owen Cocjin
-## Version: 0.1
-## Date: 2020.11.20
+## Version: 0.2
+## Date: 2020.11.21
 ## Description:    Magic bytes of each file type
 ## Notes:
 ##  - Might need to add a try/except around MagicBytes.verify() (length exception?)
-import parsing
+## Updates:
+##  - Changed zip parsing import
+from FileTypeData.zip_data import zipParse
 
 MY_NAME=__file__[__file__.rfind('/')+1:-3]
 
@@ -39,7 +41,7 @@ class MagicBytes():
 		return True
 
 magic_0x50=[
-	MagicBytes(b'\x50\x4b\x03\x04',"ZIP","(APK/JAR/KMZ/KWD/ODT/OXPS/SXC/WMZ/XPI/XPS/XPT)",parser=parsing.zipParse)
+	MagicBytes(b'\x50\x4b\x03\x04',"ZIP","(APK/JAR/KMZ/KWD/ODT/OXPS/SXC/WMZ/XPI/XPS/XPT)",parser=zipParse)
 ]
 magic_0x7f=[
 	MagicBytes(b'\x7f\x45\x4c\x46',"ELF")
