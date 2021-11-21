@@ -1,0 +1,5 @@
+#!/usr/bin/python3
+from progmenu import *
+vprint=menu.verboseSetup(['v'], colour=True)
+vprint("Hello!")
+vprint("Sick!", end='\n\n\n', colour=32)
