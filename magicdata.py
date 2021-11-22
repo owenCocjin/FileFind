@@ -31,7 +31,11 @@ class MagicBytes():
 	def verify(self,target):
 		'''Takes a fd and checks if the next n bytes correspond to self.magic'''
 		for i in range(len(self.magic)):
-			menu=target.read(1)[0]  #Convert to int
+			try:
+				menu=target.read(1)[0]  #Convert to int
+			except IndexError:  #Probably hit end of file
+				target.seek(-i+1,1)
+				return False
 			# print(f"[|X:{MY_NAME}:MagicBytes:verify]: {menu} - {self.magic[i]}")
 			if menu!=self.magic[i]:
 				#Seek back i bytes in the file
@@ -39,7 +43,9 @@ class MagicBytes():
 				return False
 		#No need to seek at the end because there shouldn't exist "nested" magic bytes
 		return True
-
+magic_0x42=[
+	MagicBytes(b'\x42\x4d',"BMP")
+]
 magic_0x50=[
 	MagicBytes(b'\x50\x4b\x03\x04',"ZIP","(APK/JAR/KMZ/KWD/ODT/OXPS/SXC/WMZ/XPI/XPS/XPT)",parser=zipParse)
 ]
@@ -58,6 +64,7 @@ magic_0xff=[
 ]
 
 magic_table={
+	b'\x42':magic_0x42,
 	b'\x50':magic_0x50,
 	b'\x7f':magic_0x7f,
 	b'\x89':magic_0x89,
