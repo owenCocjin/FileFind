@@ -34,6 +34,16 @@ class ParseData():
 			return None
 		return self.data[ref]
 
+def bToI(b,endian=False):
+	'''Returns an int.
+	If endian is True (little endian), invert the bytes first'''
+	if endian:
+		b=b[::-1]
+	toret=0
+	for i in b:
+		toret=(toret<<8)+i
+	return toret
+
 invalid="\033[91mUnknown\033[0m"
 
 
