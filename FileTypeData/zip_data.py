@@ -1,11 +1,12 @@
 ## Author:  Owen Cocjin
-## Version: 1.0
+## Version: 1.1
 ## Date: 2020.12.01
 ## Description:    Holds functions/data related to zip parsing
 ## Notes:
 ##  - All functions that seek MUST return to original seek position
 ## Updates:
 ##  - Added EoCD and CD headers parsing
+##  - Added extra fields
 
 from FileTypeData.parsing import ParseData,invalid,bToI,returnSeek,INFO,SUBINFO
 
