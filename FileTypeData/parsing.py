@@ -1,11 +1,26 @@
 ## Author:  Owen Cocjin
-## Version: 0.1
-## Date: 2020.11.21
+## Version: 1.0
+## Date: 2020.12.01
 ## Description:    Holds functions related to data parsing
 ## Notes:
 ##  - Any parsing function must return a fully formatted string, or None if no data was found.
 ##  - Parsing functions must also return to their previous seek position before returning
 ##  - All parsing assumes from start of magic bytes
+## Updates:
+##  - Added print formatting
+
+def INFO(s):
+	'''Returns a string wrapped in INFO-style edits'''
+	return f"    \033[94m[{s}]\033[0m"
+def SUBINFO(s):
+	'''Returns a string wrapped in SUBINFO-style edits'''
+	return f"      \033[94m[{s}]\033[0m"
+def NAME(s):
+	'''Returns a string wrapped in NAME-style edits'''
+	return f"\033[92m{s}\033[0m"
+def SUBSET(s):
+	'''Returns a string wrapped in SUBSET-style edits'''
+	return f"\033[93m{s}\033[0m"
 
 class ParseData():
 	def __init__(self,*args):

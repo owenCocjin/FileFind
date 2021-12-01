@@ -1,9 +1,13 @@
 #!/usr/bin/python3
 ## Author:  Owen Cocjin
-## Version: 0.1
-## Date: 2020.11.20
+## Version: 1.0
+## Date: 2020.12.01
 ## Description:    Find any magic bytes in a given file
+## Notes:
+## Updates:
+##  - Added SUBSET format printing
 import magicdata
+from FileTypeData.parsing import NAME,SUBSET
 
 from ProgMenu.progmenu import MENU
 import menuentries
@@ -27,7 +31,7 @@ def main():
 		print(f"[|X:{MY_NAME}]: Ignoring: {PARSER['exclude']}")
 	while True:
 		cur_byte=f.read(1)
-		vprint(f"\r\033[k[|X:{MY_NAME}]: Checking {cur_byte}({f.tell()})",end='')
+		# vprint(f"\r\033[k[|X:{MY_NAME}]: Checking {cur_byte}({f.tell()})",end='')
 		if cur_byte==b'':  #EOF
 			break
 		try:
@@ -37,8 +41,11 @@ def main():
 				f.seek(-1,1)  #Include cur_byte
 				if mb.verify(f) and mb.filetype not in PARSER["exclude"]:  #Print data
 					length=len(mb.magic)
-					vprint('\r\033[K',end='')
-					print(f"  [{hex(f.tell()-length)}] \033[92m{mb}\033[0m")
+					# vprint('\r\033[K',end='')
+					if mb.subset:  #Print spacers
+						print(f"  {SUBSET(f'==[{hex(f.tell()-length)}]')} {NAME(mb)}")
+					else:
+						print(f"  [{hex(f.tell()-length)}] {NAME(mb)}")
 					#Try to parse, if one exists
 					if mb.parser!=None:
 						#Seek back by length of magic bytes
