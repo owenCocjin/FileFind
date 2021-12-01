@@ -1,5 +1,5 @@
 ## Author:  Owen Cocjin
-## Version: 1.0
+## Version: 1.1
 ## Date: 2020.12.01
 ## Description:    Holds functions related to data parsing
 ## Notes:
@@ -8,13 +8,14 @@
 ##  - All parsing assumes from start of magic bytes
 ## Updates:
 ##  - Added print formatting
+##  - Added returnSeek to return to original position before parsing
 
 def INFO(s):
 	'''Returns a string wrapped in INFO-style edits'''
 	return f"    \033[94m[{s}]\033[0m"
 def SUBINFO(s):
 	'''Returns a string wrapped in SUBINFO-style edits'''
-	return f"      \033[94m[{s}]\033[0m"
+	return f"      \033[95m[{s}]\033[0m"
 def NAME(s):
 	'''Returns a string wrapped in NAME-style edits'''
 	return f"\033[92m{s}\033[0m"
@@ -58,6 +59,10 @@ def bToI(b,endian=False):
 	for i in b:
 		toret=(toret<<8)+i
 	return toret
+
+def returnSeek(start, target):
+	'''Return to start of seek position'''
+	target.seek(-(target.tell()-start),1)
 
 invalid="\033[91mUnknown\033[0m"
 
