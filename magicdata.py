@@ -1,21 +1,22 @@
 ## Author:  Owen Cocjin
-## Version: 0.2
-## Date: 2020.11.21
+## Version: 1.0
+## Date: 2020.12.01
 ## Description:    Magic bytes of each file type
 ## Notes:
 ##  - Might need to add a try/except around MagicBytes.verify() (length exception?)
 ## Updates:
-##  - Changed zip parsing import
-from FileTypeData.zip_data import zipParse
+##  - Added more ZIP headers
+from FileTypeData.zip_data import zipParse,zipEOCDParse,zipCDParse
 
 MY_NAME=__file__[__file__.rfind('/')+1:-3]
 
 class MagicBytes():
-	def __init__(self,magic,filetype,descr='N/D',trailer=None,parser=None):
+	def __init__(self,magic,filetype,descr='N/D',trailer=None,parser=None,subset=False):
 		self.magic=magic  #The magic bytes of the file, as a bytes-object
 		self.filetype=filetype
 		self.descr=descr
 		self.parser=parser
+		self.subset=subset
 		self.trailer=None
 
 	def __str__(self):
@@ -47,7 +48,9 @@ magic_0x42=[
 	MagicBytes(b'\x42\x4d',"BMP")
 ]
 magic_0x50=[
-	MagicBytes(b'\x50\x4b\x03\x04',"ZIP","(APK/JAR/KMZ/KWD/ODT/OXPS/SXC/WMZ/XPI/XPS/XPT)",parser=zipParse)
+	MagicBytes(b'\x50\x4b\x03\x04',"ZIP","(APK/JAR/KMZ/KWD/ODT/OXPS/SXC/WMZ/XPI/XPS/XPT)",parser=zipParse),
+	MagicBytes(b'\x50\x4b\x01\x02',"ZIP","Central Directory",parser=zipCDParse,subset=False),
+	MagicBytes(b'\x50\x4b\x05\x06',"ZIP","End of Central Directory",parser=zipEOCDParse,subset=False)
 ]
 magic_0x7f=[
 	MagicBytes(b'\x7f\x45\x4c\x46',"ELF")
