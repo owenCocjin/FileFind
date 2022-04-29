@@ -7,6 +7,7 @@
 ## Updates:
 ##  - Added more ZIP headers
 from FileTypeData.zip_data import zipParse,zipEOCDParse,zipCDParse
+from FileTypeData.elf_data import elfParse
 
 MY_NAME=__file__[__file__.rfind('/')+1:-3]
 
@@ -53,10 +54,13 @@ magic_0x50=[
 	MagicBytes(b'\x50\x4b\x05\x06',"ZIP","End of Central Directory",parser=zipEOCDParse,subset=False)
 ]
 magic_0x7f=[
-	MagicBytes(b'\x7f\x45\x4c\x46',"ELF")
+	MagicBytes(b'\x7f\x45\x4c\x46',"ELF",parser=elfParse)
 ]
 magic_0x89=[
 	MagicBytes(b'\x89\x50\x4e\x47\x0d\x0a\x1a\x0a',"PNG","Portable Network Graphics",trailer=b'\x49\x45\x4e\xae\x42\x60\x82')
+]
+magic_0x1f=[
+	MagicBytes(b'\x1f\x8b',"GZIP")
 ]
 magic_0xff=[
 	MagicBytes(b'\xff\xd8\xff\xdb',"JPEG","Standard File",trailer=b'\xff\xd9'),
@@ -71,5 +75,6 @@ magic_table={
 	b'\x50':magic_0x50,
 	b'\x7f':magic_0x7f,
 	b'\x89':magic_0x89,
+	b'\x1f':magic_0x1f,
 	b'\xff':magic_0xff
 }

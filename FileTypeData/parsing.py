@@ -9,7 +9,6 @@
 ## Updates:
 ##  - Added print formatting
 ##  - Added returnSeek to return to original position before parsing
-
 def INFO(s):
 	'''Returns a string wrapped in INFO-style edits'''
 	return f"    \033[94m[{s}]\033[0m"
@@ -37,6 +36,25 @@ class ParseData():
 		'''Returns True if all items aren't equal to other.
 		Good for finding any "invalid" items'''
 		return all([self.data[a]!=other for a in self.data])
+	def __str__(self):
+		toret=''
+
+		#Remove "No value"
+		try:
+			del self.data["No value"]
+		except KeyError:
+			pass
+
+		#Get longest key name
+		max_size=0
+		for k in self.data.keys():
+			if len(k)>max_size:
+				max_size=len(k)
+
+		for k,v in self.data.items():
+			toret+=f"""{INFO(k)}:{' '*(max_size-len(k)+1)}{v}\n"""
+
+		return toret[:-1]  #Remove last newline
 
 	def addData(self,ref,new,data_type=str):
 		'''Tries to add the passed data to the data dict as the specified type.
